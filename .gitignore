@@ -1,0 +1,3 @@
+.vscode
+*migrations
+*db.sqlite3
