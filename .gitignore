@@ -1,3 +1,4 @@
 .vscode
 *migrations
 *db.sqlite3
+media

@@ -5,19 +5,26 @@ from .models import Food, Category, Ingredient
 
 @admin.register(Food)
 class FoodAdmin(admin.ModelAdmin):
-    list_display = ['name', 'price', 'tags', 'created']
+    list_display = ['name', 'amount', 'tag_list', 'created']
     list_filter = ['created', 'tags']
-    search_field = ['name', 'tags']
+    search_fields = ['name', 'category__name']
+    prepopulated_fields = {'slug': ('name',)}
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).prefetch_related('tags')
+
+    def tag_list(self, obj):
+        return ", ".join(o.name for o in obj.tags.all())
+
+    def amount(self, obj):
+        return str(obj.price)+" zł"
 
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'tags', 'created']
-    list_filter = ['created', 'tags']
-    search_field = ['name', 'tags']
-
+class CategoryAdmin(FoodAdmin):
+    list_display = ['name', 'tag_list', 'created']
+    
 @admin.register(Ingredient)
-class IngredientAdmin(admin.ModelAdmin):
-    list_display = ['name', 'price', 'tags', 'created']
-    list_filter = ['created', 'tags']
-    search_field = ['name', 'tags']
+class IngredientAdmin(FoodAdmin):
+    pass
+
 
