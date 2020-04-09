@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..models import Food, Ingredient, Category
+from ..models import Food, Addition, Category
 from taggit_serializer.serializers import (TagListSerializerField,
                                            TaggitSerializer)
 
@@ -12,14 +12,14 @@ class CategorySerializer(TaggitSerializer, serializers.ModelSerializer):
         fields = '__all__'
 
 
-class IngredientSerializer(CategorySerializer):
+class AdditionSerializer(CategorySerializer):
 
     class Meta:
-        model = Ingredient
+        model = Addition
         exclude = ('updated',)
 
     
-class FoodSerializer(IngredientSerializer):
+class FoodSerializer(AdditionSerializer):
 
     class Meta:
         model = Food

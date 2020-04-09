@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Food, Category, Ingredient
+from .models import Food, Category, Addition
 
 # Register your models here.
 
@@ -23,7 +23,7 @@ class FoodAdmin(admin.ModelAdmin):
 class CategoryAdmin(FoodAdmin):
     list_display = ['name', 'tag_list', 'created']
     
-@admin.register(Ingredient)
+@admin.register(Addition)
 class IngredientAdmin(FoodAdmin):
     pass
 

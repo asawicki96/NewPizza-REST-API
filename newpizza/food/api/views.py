@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .serializers import FoodSerializer, CategorySerializer, IngredientSerializer
-from ..models import Food, Ingredient, Category
+from .serializers import FoodSerializer, CategorySerializer, AdditionSerializer
+from ..models import Food, Addition, Category
 from rest_framework.permissions import BasePermission, IsAdminUser, SAFE_METHODS
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
@@ -15,9 +15,9 @@ class FoodViewSet(viewsets.ModelViewSet):
     serializer_class = FoodSerializer
     permission_classes = [IsAdminUser|ReadOnly]
 
-class IngredientsViewSet(viewsets.ModelViewSet):
-    queryset = Ingredient.objects.all()
-    serializer_class = IngredientSerializer
+class AdditionViewSet(viewsets.ModelViewSet):
+    queryset = Addition.objects.all()
+    serializer_class = AdditionSerializer
     permission_classes = [IsAdminUser|ReadOnly]
 
 class CategoryViewSet(viewsets.ModelViewSet):
