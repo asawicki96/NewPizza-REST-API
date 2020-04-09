@@ -42,9 +42,9 @@ class Ingredient(models.Model):
 class Food(models.Model):
     name = models.CharField(max_length=128)
     slug = models.SlugField(max_length=128)
-    price = models.DecimalField(max_digits=5, decimal_places=2)
-    ingredients = models.ManyToManyField(Ingredient)
-    category = models.ForeignKey(Category, on_delete=models.SET_DEFAULT, default='pizza', blank=True)
+    price = models.DecimalField(max_digits=5, decimal_places=2, null=True)
+    ingredients = models.CharField(max_length=2000)
+    category = models.ForeignKey(Category, on_delete=models.SET_DEFAULT, default=1, blank=True)
     description = models.CharField(max_length=1024, null=True, blank=True)
     image = models.ImageField(upload_to='food/%Y/%m/%d', blank=True)
     created = models.DateTimeField(auto_now_add=True)

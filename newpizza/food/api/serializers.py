@@ -1,62 +1,34 @@
 from rest_framework import serializers
 from ..models import Food, Ingredient, Category
+from taggit_serializer.serializers import (TagListSerializerField,
+                                           TaggitSerializer)
 
-class TagSerializerField(serializers.ListField):
-    child = serializers.CharField()
 
-    def to_representation(self, data):
-        return data.values_list('name', flat=True)
-
-class CategoryDetailSerializer(serializers.ModelSerializer):
-    tags = TagSerializerField()
+class CategorySerializer(TaggitSerializer, serializers.ModelSerializer):
+    tags = TagListSerializerField()
     
     class Meta:
         model = Category
-        fields = (
-            'id', 
-            'name', 
-            'slug', 
-            'description', 
-            'created', 
-            'updated', 
-            'tags'
-        )
+        fields = '__all__'
 
 
-class IngredientListSerializer(CategoryDetailSerializer):
-    price = serializers.SerializerMethodField('get_price')
-
-    def get_price(self, obj):
-        return str(obj.price)+" zł"
+class IngredientSerializer(CategorySerializer):
 
     class Meta:
         model = Ingredient
-        fields = (
-            'name',
-            'slug',
-            'price',
-            'description',
-            'image',
-            'created',
-            'tags'
-        )
+        exclude = ('updated',)
 
     
-class FoodListSerializer(IngredientListSerializer):
-    #ingredients = IngredientListSerializer(many=True, read_only=True)
-    ingredients = serializers.StringRelatedField(many=True, read_only=True)
+class FoodSerializer(IngredientSerializer):
 
     class Meta:
         model = Food
-        fields = (
-            'id', 
-            'name',
-            'price', 
-            'slug', 
-            'ingredients', 
-            'category', 
-            'description',
-            'image', 
-            'created', 
-            'tags'
-        )
+        exclude = ('updated',)
+            
+        
+
+    
+
+
+    
+
