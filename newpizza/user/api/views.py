@@ -2,12 +2,13 @@ from rest_framework.views import APIView
 from django.contrib.auth import login, authenticate
 from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserLoginSerializer
 from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework import status
 import json
 from rest_framework.exceptions import APIException
+from django.contrib.auth import logout
 
 class NotAllowedException(APIException):
     status_code = 403
@@ -30,14 +31,26 @@ class UserUpdateView(RetrieveUpdateAPIView):
     queryset = User.objects.all()
 
     def put(self, request, *args, **kwargs):
-        if request.user.id == args:
+        print(request.user.id, kwargs)
+        if request.user.id == int(kwargs['pk']):
             return self.update(request, *args, **kwargs)
         else:
-            error = json.dumps(obj='Not allowed')
             raise NotAllowedException
 
-
-
+class UserLoginView(APIView):
+    def post(self, request):
+        serializer = UserLoginSerializer(data=request.data)
+        if serializer.is_valid():
+            if serializer.validate(serializer.initial_data):
+                login(request, serializer.validate(serializer.initial_data))
+                return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        return Response(status=status.HTTP_403_FORBIDDEN)
         
+
+class UserLogoutView(APIView):
+    def get(self, request):
+        logout(request)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 

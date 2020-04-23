@@ -47,7 +47,7 @@ class OrderItemSerializer(serializers.Serializer):
             order = validated_data.get('order'),
             content_type = validated_data.get('content_type'),
             object_id = item.id,
-            item= item,
+            item = item,
             price = price,
             quantity = validated_data.get('quantity')
         )
