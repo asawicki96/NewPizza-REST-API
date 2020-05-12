@@ -3,6 +3,8 @@ from .models import Food, Category, Addition
 
 # Register your models here.
 
+''' Admin view for Food model '''
+
 @admin.register(Food)
 class FoodAdmin(admin.ModelAdmin):
     list_display = ['name', 'amount', 'tag_list', 'created']
@@ -19,12 +21,16 @@ class FoodAdmin(admin.ModelAdmin):
     def amount(self, obj):
         return str(obj.price)+" zł"
 
+''' Admin view for Category model '''
+
 @admin.register(Category)
 class CategoryAdmin(FoodAdmin):
     list_display = ['name', 'tag_list', 'created']
     
+''' Admin view for Addition model '''
+
 @admin.register(Addition)
-class IngredientAdmin(FoodAdmin):
+class AdditionAdmin(FoodAdmin):
     pass
 
 

@@ -15,7 +15,6 @@ class Order(models.Model):
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
 
-
     class Meta:
         ordering = ('-created',)
 

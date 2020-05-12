@@ -3,7 +3,6 @@ from ..models import Food, Addition, Category
 from taggit_serializer.serializers import (TagListSerializerField,
                                            TaggitSerializer)
 
-
 class CategorySerializer(TaggitSerializer, serializers.ModelSerializer):
     tags = TagListSerializerField()
     

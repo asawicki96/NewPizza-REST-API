@@ -39,7 +39,7 @@ class Addition(models.Model):
 
     class Meta:
         ordering = ['-created']
-        verbose_name_plural = 'Ingredients'
+        verbose_name_plural = 'Additions'
         indexes = [models.Index(fields=['name'])]
 
     def __str__(self):

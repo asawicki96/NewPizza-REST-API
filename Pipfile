@@ -11,6 +11,7 @@ djangorestframework = "*"
 django-taggit = "*"
 pillow = "*"
 django-taggit-serializer = "*"
+django-elasticsearch-dsl = "*"
 
 [requires]
 python_version = "3.8"
