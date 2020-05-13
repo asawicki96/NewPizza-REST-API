@@ -1,6 +1,6 @@
 # NewPizza
 
-An **REST API** application, designed by means of **django-REST framework**, to provide backend support for restaurant websites.
+An **REST API**, designed by means of **django-REST framework**, to provide backend support for restaurant websites.
 It allows to create, update & etc.. db objects such as Food, Addition, Order. ListViews allows to search and filter object wchich
 is realised by means of **ElasticSearch** and **taggit**.
 Authentication and registration views are also provided. Authenticated User can create Orders and update
@@ -41,4 +41,5 @@ List of endpoints:
 - api/user/update/<pk> : by HTTP PUT method -> user update view,
 - api/user/login/ : by HTTP POST method -> user login view,
 - api/user/logout/ : by HTTP GET method -> user logout view (deleting user's session data).
+
 
