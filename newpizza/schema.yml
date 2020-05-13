@@ -1,0 +1,1694 @@
+openapi: 3.0.2
+info:
+  title: ''
+  version: ''
+paths:
+  /:
+    get:
+      operationId: listSwaggerSchemas
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/coreapi+json:
+              schema: &id001
+                type: array
+                items: {}
+            application/openapi+json:
+              schema: *id001
+            text/html:
+              schema: *id001
+          description: ''
+  /api/food/:
+    get:
+      operationId: listFoods
+      description: ''
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      properties:
+                        id:
+                          type: integer
+                          readOnly: true
+                        tags:
+                          type: string
+                        name:
+                          type: string
+                          maxLength: 128
+                        slug:
+                          type: string
+                          maxLength: 128
+                          pattern: ^[-a-zA-Z0-9_]+$
+                        price:
+                          type: number
+                          multipleOf: 0.01
+                          maximum: 1000
+                          minimum: -1000
+                        ingredients:
+                          type: string
+                          maxLength: 2000
+                        description:
+                          type: string
+                          nullable: true
+                          maxLength: 1024
+                        image:
+                          type: string
+                          format: binary
+                        size:
+                          enum:
+                          - S
+                          - M
+                          - L
+                        created:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        category:
+                          type: integer
+                      required:
+                      - tags
+                      - name
+                      - slug
+                      - price
+                      - ingredients
+          description: ''
+    post:
+      operationId: createFood
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id002
+              properties:
+                tags:
+                  type: string
+                name:
+                  type: string
+                  maxLength: 128
+                slug:
+                  type: string
+                  maxLength: 128
+                  pattern: ^[-a-zA-Z0-9_]+$
+                price:
+                  type: number
+                  multipleOf: 0.01
+                  maximum: 1000
+                  minimum: -1000
+                ingredients:
+                  type: string
+                  maxLength: 2000
+                description:
+                  type: string
+                  nullable: true
+                  maxLength: 1024
+                image:
+                  type: string
+                  format: binary
+                size:
+                  enum:
+                  - S
+                  - M
+                  - L
+                category:
+                  type: integer
+              required:
+              - tags
+              - name
+              - slug
+              - price
+              - ingredients
+          application/x-www-form-urlencoded:
+            schema: *id002
+          multipart/form-data:
+            schema: *id002
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  tags:
+                    type: string
+                  name:
+                    type: string
+                    maxLength: 128
+                  slug:
+                    type: string
+                    maxLength: 128
+                    pattern: ^[-a-zA-Z0-9_]+$
+                  price:
+                    type: number
+                    multipleOf: 0.01
+                    maximum: 1000
+                    minimum: -1000
+                  ingredients:
+                    type: string
+                    maxLength: 2000
+                  description:
+                    type: string
+                    nullable: true
+                    maxLength: 1024
+                  image:
+                    type: string
+                    format: binary
+                  size:
+                    enum:
+                    - S
+                    - M
+                    - L
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  category:
+                    type: integer
+                required:
+                - tags
+                - name
+                - slug
+                - price
+                - ingredients
+          description: ''
+  /api/food/{id}/:
+    get:
+      operationId: retrieveFood
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  tags:
+                    type: string
+                  name:
+                    type: string
+                    maxLength: 128
+                  slug:
+                    type: string
+                    maxLength: 128
+                    pattern: ^[-a-zA-Z0-9_]+$
+                  price:
+                    type: number
+                    multipleOf: 0.01
+                    maximum: 1000
+                    minimum: -1000
+                  ingredients:
+                    type: string
+                    maxLength: 2000
+                  description:
+                    type: string
+                    nullable: true
+                    maxLength: 1024
+                  image:
+                    type: string
+                    format: binary
+                  size:
+                    enum:
+                    - S
+                    - M
+                    - L
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  category:
+                    type: integer
+                required:
+                - tags
+                - name
+                - slug
+                - price
+                - ingredients
+          description: ''
+    put:
+      operationId: updateFood
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id003
+              properties:
+                tags:
+                  type: string
+                name:
+                  type: string
+                  maxLength: 128
+                slug:
+                  type: string
+                  maxLength: 128
+                  pattern: ^[-a-zA-Z0-9_]+$
+                price:
+                  type: number
+                  multipleOf: 0.01
+                  maximum: 1000
+                  minimum: -1000
+                ingredients:
+                  type: string
+                  maxLength: 2000
+                description:
+                  type: string
+                  nullable: true
+                  maxLength: 1024
+                image:
+                  type: string
+                  format: binary
+                size:
+                  enum:
+                  - S
+                  - M
+                  - L
+                category:
+                  type: integer
+              required:
+              - tags
+              - name
+              - slug
+              - price
+              - ingredients
+          application/x-www-form-urlencoded:
+            schema: *id003
+          multipart/form-data:
+            schema: *id003
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  tags:
+                    type: string
+                  name:
+                    type: string
+                    maxLength: 128
+                  slug:
+                    type: string
+                    maxLength: 128
+                    pattern: ^[-a-zA-Z0-9_]+$
+                  price:
+                    type: number
+                    multipleOf: 0.01
+                    maximum: 1000
+                    minimum: -1000
+                  ingredients:
+                    type: string
+                    maxLength: 2000
+                  description:
+                    type: string
+                    nullable: true
+                    maxLength: 1024
+                  image:
+                    type: string
+                    format: binary
+                  size:
+                    enum:
+                    - S
+                    - M
+                    - L
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  category:
+                    type: integer
+                required:
+                - tags
+                - name
+                - slug
+                - price
+                - ingredients
+          description: ''
+    patch:
+      operationId: partial_updateFood
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id004
+              properties:
+                tags:
+                  type: string
+                name:
+                  type: string
+                  maxLength: 128
+                slug:
+                  type: string
+                  maxLength: 128
+                  pattern: ^[-a-zA-Z0-9_]+$
+                price:
+                  type: number
+                  multipleOf: 0.01
+                  maximum: 1000
+                  minimum: -1000
+                ingredients:
+                  type: string
+                  maxLength: 2000
+                description:
+                  type: string
+                  nullable: true
+                  maxLength: 1024
+                image:
+                  type: string
+                  format: binary
+                size:
+                  enum:
+                  - S
+                  - M
+                  - L
+                category:
+                  type: integer
+          application/x-www-form-urlencoded:
+            schema: *id004
+          multipart/form-data:
+            schema: *id004
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  tags:
+                    type: string
+                  name:
+                    type: string
+                    maxLength: 128
+                  slug:
+                    type: string
+                    maxLength: 128
+                    pattern: ^[-a-zA-Z0-9_]+$
+                  price:
+                    type: number
+                    multipleOf: 0.01
+                    maximum: 1000
+                    minimum: -1000
+                  ingredients:
+                    type: string
+                    maxLength: 2000
+                  description:
+                    type: string
+                    nullable: true
+                    maxLength: 1024
+                  image:
+                    type: string
+                    format: binary
+                  size:
+                    enum:
+                    - S
+                    - M
+                    - L
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  category:
+                    type: integer
+                required:
+                - tags
+                - name
+                - slug
+                - price
+                - ingredients
+          description: ''
+    delete:
+      operationId: destroyFood
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/additions/:
+    get:
+      operationId: listAdditions
+      description: ''
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      properties:
+                        id:
+                          type: integer
+                          readOnly: true
+                        tags:
+                          type: string
+                        name:
+                          type: string
+                          maxLength: 128
+                        slug:
+                          type: string
+                          maxLength: 128
+                          pattern: ^[-a-zA-Z0-9_]+$
+                        price:
+                          type: number
+                          multipleOf: 0.01
+                          maximum: 1000
+                          minimum: -1000
+                        description:
+                          type: string
+                          nullable: true
+                          maxLength: 1024
+                        image:
+                          type: string
+                          format: binary
+                        size:
+                          enum:
+                          - S
+                          - M
+                          - L
+                        created:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                      required:
+                      - tags
+                      - name
+                      - slug
+                      - price
+          description: ''
+    post:
+      operationId: createAddition
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id005
+              properties:
+                tags:
+                  type: string
+                name:
+                  type: string
+                  maxLength: 128
+                slug:
+                  type: string
+                  maxLength: 128
+                  pattern: ^[-a-zA-Z0-9_]+$
+                price:
+                  type: number
+                  multipleOf: 0.01
+                  maximum: 1000
+                  minimum: -1000
+                description:
+                  type: string
+                  nullable: true
+                  maxLength: 1024
+                image:
+                  type: string
+                  format: binary
+                size:
+                  enum:
+                  - S
+                  - M
+                  - L
+              required:
+              - tags
+              - name
+              - slug
+              - price
+          application/x-www-form-urlencoded:
+            schema: *id005
+          multipart/form-data:
+            schema: *id005
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  tags:
+                    type: string
+                  name:
+                    type: string
+                    maxLength: 128
+                  slug:
+                    type: string
+                    maxLength: 128
+                    pattern: ^[-a-zA-Z0-9_]+$
+                  price:
+                    type: number
+                    multipleOf: 0.01
+                    maximum: 1000
+                    minimum: -1000
+                  description:
+                    type: string
+                    nullable: true
+                    maxLength: 1024
+                  image:
+                    type: string
+                    format: binary
+                  size:
+                    enum:
+                    - S
+                    - M
+                    - L
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required:
+                - tags
+                - name
+                - slug
+                - price
+          description: ''
+  /api/additions/{id}/:
+    get:
+      operationId: retrieveAddition
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this addition.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  tags:
+                    type: string
+                  name:
+                    type: string
+                    maxLength: 128
+                  slug:
+                    type: string
+                    maxLength: 128
+                    pattern: ^[-a-zA-Z0-9_]+$
+                  price:
+                    type: number
+                    multipleOf: 0.01
+                    maximum: 1000
+                    minimum: -1000
+                  description:
+                    type: string
+                    nullable: true
+                    maxLength: 1024
+                  image:
+                    type: string
+                    format: binary
+                  size:
+                    enum:
+                    - S
+                    - M
+                    - L
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required:
+                - tags
+                - name
+                - slug
+                - price
+          description: ''
+    put:
+      operationId: updateAddition
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this addition.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id006
+              properties:
+                tags:
+                  type: string
+                name:
+                  type: string
+                  maxLength: 128
+                slug:
+                  type: string
+                  maxLength: 128
+                  pattern: ^[-a-zA-Z0-9_]+$
+                price:
+                  type: number
+                  multipleOf: 0.01
+                  maximum: 1000
+                  minimum: -1000
+                description:
+                  type: string
+                  nullable: true
+                  maxLength: 1024
+                image:
+                  type: string
+                  format: binary
+                size:
+                  enum:
+                  - S
+                  - M
+                  - L
+              required:
+              - tags
+              - name
+              - slug
+              - price
+          application/x-www-form-urlencoded:
+            schema: *id006
+          multipart/form-data:
+            schema: *id006
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  tags:
+                    type: string
+                  name:
+                    type: string
+                    maxLength: 128
+                  slug:
+                    type: string
+                    maxLength: 128
+                    pattern: ^[-a-zA-Z0-9_]+$
+                  price:
+                    type: number
+                    multipleOf: 0.01
+                    maximum: 1000
+                    minimum: -1000
+                  description:
+                    type: string
+                    nullable: true
+                    maxLength: 1024
+                  image:
+                    type: string
+                    format: binary
+                  size:
+                    enum:
+                    - S
+                    - M
+                    - L
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required:
+                - tags
+                - name
+                - slug
+                - price
+          description: ''
+    patch:
+      operationId: partial_updateAddition
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this addition.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id007
+              properties:
+                tags:
+                  type: string
+                name:
+                  type: string
+                  maxLength: 128
+                slug:
+                  type: string
+                  maxLength: 128
+                  pattern: ^[-a-zA-Z0-9_]+$
+                price:
+                  type: number
+                  multipleOf: 0.01
+                  maximum: 1000
+                  minimum: -1000
+                description:
+                  type: string
+                  nullable: true
+                  maxLength: 1024
+                image:
+                  type: string
+                  format: binary
+                size:
+                  enum:
+                  - S
+                  - M
+                  - L
+          application/x-www-form-urlencoded:
+            schema: *id007
+          multipart/form-data:
+            schema: *id007
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  tags:
+                    type: string
+                  name:
+                    type: string
+                    maxLength: 128
+                  slug:
+                    type: string
+                    maxLength: 128
+                    pattern: ^[-a-zA-Z0-9_]+$
+                  price:
+                    type: number
+                    multipleOf: 0.01
+                    maximum: 1000
+                    minimum: -1000
+                  description:
+                    type: string
+                    nullable: true
+                    maxLength: 1024
+                  image:
+                    type: string
+                    format: binary
+                  size:
+                    enum:
+                    - S
+                    - M
+                    - L
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required:
+                - tags
+                - name
+                - slug
+                - price
+          description: ''
+    delete:
+      operationId: destroyAddition
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this addition.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/categories/:
+    get:
+      operationId: listCategorys
+      description: ''
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      properties:
+                        id:
+                          type: integer
+                          readOnly: true
+                        tags:
+                          type: string
+                        name:
+                          type: string
+                          maxLength: 128
+                        slug:
+                          type: string
+                          maxLength: 128
+                          pattern: ^[-a-zA-Z0-9_]+$
+                        description:
+                          type: string
+                          nullable: true
+                          maxLength: 1024
+                        created:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                      required:
+                      - tags
+                      - name
+                      - slug
+          description: ''
+    post:
+      operationId: createCategory
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id008
+              properties:
+                tags:
+                  type: string
+                name:
+                  type: string
+                  maxLength: 128
+                slug:
+                  type: string
+                  maxLength: 128
+                  pattern: ^[-a-zA-Z0-9_]+$
+                description:
+                  type: string
+                  nullable: true
+                  maxLength: 1024
+              required:
+              - tags
+              - name
+              - slug
+          application/x-www-form-urlencoded:
+            schema: *id008
+          multipart/form-data:
+            schema: *id008
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  tags:
+                    type: string
+                  name:
+                    type: string
+                    maxLength: 128
+                  slug:
+                    type: string
+                    maxLength: 128
+                    pattern: ^[-a-zA-Z0-9_]+$
+                  description:
+                    type: string
+                    nullable: true
+                    maxLength: 1024
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updated:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required:
+                - tags
+                - name
+                - slug
+          description: ''
+  /api/categories/{id}/:
+    get:
+      operationId: retrieveCategory
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this category.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  tags:
+                    type: string
+                  name:
+                    type: string
+                    maxLength: 128
+                  slug:
+                    type: string
+                    maxLength: 128
+                    pattern: ^[-a-zA-Z0-9_]+$
+                  description:
+                    type: string
+                    nullable: true
+                    maxLength: 1024
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updated:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required:
+                - tags
+                - name
+                - slug
+          description: ''
+    put:
+      operationId: updateCategory
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this category.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id009
+              properties:
+                tags:
+                  type: string
+                name:
+                  type: string
+                  maxLength: 128
+                slug:
+                  type: string
+                  maxLength: 128
+                  pattern: ^[-a-zA-Z0-9_]+$
+                description:
+                  type: string
+                  nullable: true
+                  maxLength: 1024
+              required:
+              - tags
+              - name
+              - slug
+          application/x-www-form-urlencoded:
+            schema: *id009
+          multipart/form-data:
+            schema: *id009
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  tags:
+                    type: string
+                  name:
+                    type: string
+                    maxLength: 128
+                  slug:
+                    type: string
+                    maxLength: 128
+                    pattern: ^[-a-zA-Z0-9_]+$
+                  description:
+                    type: string
+                    nullable: true
+                    maxLength: 1024
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updated:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required:
+                - tags
+                - name
+                - slug
+          description: ''
+    patch:
+      operationId: partial_updateCategory
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this category.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id010
+              properties:
+                tags:
+                  type: string
+                name:
+                  type: string
+                  maxLength: 128
+                slug:
+                  type: string
+                  maxLength: 128
+                  pattern: ^[-a-zA-Z0-9_]+$
+                description:
+                  type: string
+                  nullable: true
+                  maxLength: 1024
+          application/x-www-form-urlencoded:
+            schema: *id010
+          multipart/form-data:
+            schema: *id010
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  tags:
+                    type: string
+                  name:
+                    type: string
+                    maxLength: 128
+                  slug:
+                    type: string
+                    maxLength: 128
+                    pattern: ^[-a-zA-Z0-9_]+$
+                  description:
+                    type: string
+                    nullable: true
+                    maxLength: 1024
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updated:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required:
+                - tags
+                - name
+                - slug
+          description: ''
+    delete:
+      operationId: destroyCategory
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this category.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/orderitems/:
+    get:
+      operationId: listOrderItems
+      description: ''
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      properties:
+                        content_type:
+                          type: string
+                        order:
+                          type: integer
+                        item:
+                          type: string
+                        price:
+                          type: number
+                          multipleOf: 0.01
+                          maximum: 1000
+                          minimum: -1000
+                        quantity:
+                          type: integer
+                      required:
+                      - content_type
+                      - order
+                      - item
+                      - quantity
+          description: ''
+    post:
+      operationId: CreateCreateOrderItem
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+  /api/orderitems/{id}/:
+    get:
+      operationId: retrieveOrderItem
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this order item.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  content_type:
+                    type: string
+                  order:
+                    type: integer
+                  item:
+                    type: string
+                  price:
+                    type: number
+                    multipleOf: 0.01
+                    maximum: 1000
+                    minimum: -1000
+                  quantity:
+                    type: integer
+                required:
+                - content_type
+                - order
+                - item
+                - quantity
+          description: ''
+  /api/orders/:
+    get:
+      operationId: listOrders
+      description: ''
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      properties:
+                        first_name:
+                          type: string
+                          maxLength: 50
+                        last_name:
+                          type: string
+                          maxLength: 50
+                        address:
+                          type: string
+                          maxLength: 250
+                        postal_code:
+                          type: string
+                          maxLength: 20
+                        city:
+                          type: string
+                          maxLength: 100
+                        created:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        paid:
+                          type: boolean
+                        items:
+                          type: array
+                          items:
+                            properties:
+                              content_type:
+                                type: string
+                              order:
+                                type: integer
+                              item:
+                                type: string
+                              price:
+                                type: number
+                                multipleOf: 0.01
+                                maximum: 1000
+                                minimum: -1000
+                              quantity:
+                                type: integer
+                            required:
+                            - content_type
+                            - order
+                            - item
+                            - quantity
+                          readOnly: true
+                      required:
+                      - first_name
+                      - last_name
+                      - address
+                      - postal_code
+                      - city
+          description: ''
+    post:
+      operationId: CreateCreateOrder
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+  /api/orders/{id}/:
+    get:
+      operationId: retrieveOrder
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this order.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  first_name:
+                    type: string
+                    maxLength: 50
+                  last_name:
+                    type: string
+                    maxLength: 50
+                  address:
+                    type: string
+                    maxLength: 250
+                  postal_code:
+                    type: string
+                    maxLength: 20
+                  city:
+                    type: string
+                    maxLength: 100
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  paid:
+                    type: boolean
+                  items:
+                    type: array
+                    items:
+                      properties:
+                        content_type:
+                          type: string
+                        order:
+                          type: integer
+                        item:
+                          type: string
+                        price:
+                          type: number
+                          multipleOf: 0.01
+                          maximum: 1000
+                          minimum: -1000
+                        quantity:
+                          type: integer
+                      required:
+                      - content_type
+                      - order
+                      - item
+                      - quantity
+                    readOnly: true
+                required:
+                - first_name
+                - last_name
+                - address
+                - postal_code
+                - city
+          description: ''
+  /api/user/update/{id}:
+    get:
+      operationId: RetrieveUser
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this u\u017Cytkownik."
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  username:
+                    type: string
+                    description: "Wymagana. 150 lub mniej znak\xF3w. Jedynie litery,\
+                      \ cyfry i @/./+/-/_."
+                    pattern: ^[\w.@+-]+\Z
+                    maxLength: 150
+                  password:
+                    type: string
+                    maxLength: 128
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  first_name:
+                    type: string
+                    maxLength: 30
+                  last_name:
+                    type: string
+                    maxLength: 150
+                required:
+                - username
+                - password
+          description: ''
+    put:
+      operationId: UpdateUser
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this u\u017Cytkownik."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id011
+              properties:
+                username:
+                  type: string
+                  description: "Wymagana. 150 lub mniej znak\xF3w. Jedynie litery,\
+                    \ cyfry i @/./+/-/_."
+                  pattern: ^[\w.@+-]+\Z
+                  maxLength: 150
+                password:
+                  type: string
+                  maxLength: 128
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+                first_name:
+                  type: string
+                  maxLength: 30
+                last_name:
+                  type: string
+                  maxLength: 150
+              required:
+              - username
+              - password
+          application/x-www-form-urlencoded:
+            schema: *id011
+          multipart/form-data:
+            schema: *id011
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  username:
+                    type: string
+                    description: "Wymagana. 150 lub mniej znak\xF3w. Jedynie litery,\
+                      \ cyfry i @/./+/-/_."
+                    pattern: ^[\w.@+-]+\Z
+                    maxLength: 150
+                  password:
+                    type: string
+                    maxLength: 128
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  first_name:
+                    type: string
+                    maxLength: 30
+                  last_name:
+                    type: string
+                    maxLength: 150
+                required:
+                - username
+                - password
+          description: ''
+    patch:
+      operationId: PartialUpdateUser
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this u\u017Cytkownik."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id012
+              properties:
+                username:
+                  type: string
+                  description: "Wymagana. 150 lub mniej znak\xF3w. Jedynie litery,\
+                    \ cyfry i @/./+/-/_."
+                  pattern: ^[\w.@+-]+\Z
+                  maxLength: 150
+                password:
+                  type: string
+                  maxLength: 128
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+                first_name:
+                  type: string
+                  maxLength: 30
+                last_name:
+                  type: string
+                  maxLength: 150
+          application/x-www-form-urlencoded:
+            schema: *id012
+          multipart/form-data:
+            schema: *id012
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  username:
+                    type: string
+                    description: "Wymagana. 150 lub mniej znak\xF3w. Jedynie litery,\
+                      \ cyfry i @/./+/-/_."
+                    pattern: ^[\w.@+-]+\Z
+                    maxLength: 150
+                  password:
+                    type: string
+                    maxLength: 128
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  first_name:
+                    type: string
+                    maxLength: 30
+                  last_name:
+                    type: string
+                    maxLength: 150
+                required:
+                - username
+                - password
+          description: ''
+  /api/user/logout/:
+    get:
+      operationId: listUserLogouts
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+  /api/user/create:
+    post:
+      operationId: CreateUserRegistration
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+  /api/user/login/:
+    post:
+      operationId: CreateUserLogin
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''

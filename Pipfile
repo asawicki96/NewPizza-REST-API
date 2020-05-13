@@ -12,6 +12,8 @@ django-taggit = "*"
 pillow = "*"
 django-taggit-serializer = "*"
 django-elasticsearch-dsl = "*"
+coreapi = "*"
+pyyaml = "*"
 
 [requires]
 python_version = "3.8"
