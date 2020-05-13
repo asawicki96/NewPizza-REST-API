@@ -12,26 +12,33 @@ class ReadOnly(BasePermission):
         return request.method in SAFE_METHODS
 
 
-''' CRUD viewset for Food model '''
+''' CRUD viewset for Food model 
+    listView allows to search when searchfield 
+    given and filter when tags are given'''
 
 class FoodViewSet(viewsets.ModelViewSet):
     serializer_class = FoodSerializer
     permission_classes = [IsAdminUser|ReadOnly]
 
     def get_queryset(self):
-        tag = self.request.GET.get('tag', None).split(',')
+        tags = self.request.GET.get('tags', None)
+        if tags:
+            tags = tags.split(',')
+
         searchfield = self.request.GET.get('searchfield', None)
         if searchfield:  
             queryset = FoodDocument.search().filter('multi_match', query=searchfield,
                         fields=['name', 'slug', 'description', 'ingredients']).to_queryset()
-        elif tag:
-            queryset = Food.objects.filter(tags__name__in=tag).distinct()
+        elif tags:
+            queryset = Food.objects.filter(tags__name__in=tags).distinct()
         else:
             queryset = Food.objects.all()
         return queryset
 
 
-''' CRUD viewset for Addition model '''
+''' CRUD viewset for Addition model 
+    listView allows to search when searchfield 
+    given and filter when tags are given'''
 
 class AdditionViewSet(viewsets.ModelViewSet):
     queryset = Addition.objects.all()
